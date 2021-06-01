@@ -5,7 +5,7 @@ import Farmer from '../../images/farmer.jpg'
 
 
 export default {
-    title: 'LeftSide',
+    title: 'Example/LeftSide',
     component: LeftSide,
 } as Meta;
 
