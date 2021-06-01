@@ -7,15 +7,15 @@ const Container = styled.div`
       p {
       position: absolute;
       top: 30%;
-      left: 7%;
+      left: 10%;
       color: #FFFFFF;
-      font-family: Futura Std;
+      font-family: "Futura Std";
       font-style: normal;
       font-weight: 400px;
       font-size: 40px;
       line-height: 48px;
       text-align: center;
-      max-width: 534px;
+      max-width: 505px;
     }
   }
 `;
