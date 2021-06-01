@@ -10,5 +10,7 @@ describe("Storybook", () => {
     it("Has the left side component", () => {
         cy.contains("LeftSide")
         cy.visit("http://localhost:6006/iframe.html?id=leftside--view-1&args=&viewMode=story")
+        cy.get('div')
+        cy.get('p')
     })
 })

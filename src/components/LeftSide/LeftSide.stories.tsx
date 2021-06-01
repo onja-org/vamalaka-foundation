@@ -1,3 +1,4 @@
+import React from "react";
 import { Story, Meta } from '@storybook/react';
 import { LeftSide, LeftSideProps } from "./LeftSide";
 import Baobab from '../../images/baobab.jpg'
@@ -5,7 +6,7 @@ import Farmer from '../../images/farmer.jpg'
 
 
 export default {
-    title: 'Example/LeftSide',
+    title: 'LeftSide',
     component: LeftSide,
 } as Meta;
 
