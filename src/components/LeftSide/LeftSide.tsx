@@ -1,6 +1,4 @@
-import react from 'react'
 import styled from 'styled-components'
-import { GlobalStyles } from '../../fonts/LeftSideFont';
 
 const Container = styled.div`
   div {
