@@ -7,7 +7,7 @@ const Container = styled.div`
       p {
       position: absolute;
       top: 30%;
-      left: 8%;
+      left: 7%;
       color: #FFFFFF;
       font-family: Futura Std;
       font-style: normal;
