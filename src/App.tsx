@@ -21,7 +21,6 @@ function App() {
         <div onClick={()=>dispatch(incrementByAmount(10))}>+10</div>
         <div onClick={()=>dispatch(fetchAds(7))}>GET ADS</div>
         <div>{ads?.map((ad)=>{
-
           return (<div key ={ad.id}>username: {ad.username} , title: {ad.title}</div>)
         })}</div>
       </header>
