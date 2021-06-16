@@ -8,3 +8,4 @@ describe("Home Screen", () => {
         cy.contains("Madagascars peer-to-peer e-commerce platform")
     })
 })
+
