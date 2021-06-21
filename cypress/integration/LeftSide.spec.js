@@ -4,11 +4,14 @@ describe("Storybook", () => {
     beforeEach("visits storybook", () => {
         cy.visit("http://localhost:6006")
         cy.contains("LeftSide", {timeout: 20000})
-
+        cy.get('div')
+        cy.get(('p'))
     })
   
     it("Has the left side component", () => {
         cy.contains("LeftSide")
         cy.visit("http://localhost:6006/iframe.html?id=leftside--view-1&args=&viewMode=story")
+        cy.get('div')
+        cy.get('p')
     })
 })
