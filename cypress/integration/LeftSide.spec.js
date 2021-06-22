@@ -1,6 +1,6 @@
 describe('LeftSide', () => {
   beforeEach('visits site', () => {
-    cy.visit('http://localhost:6006')
+    cy.visit('http://localhost:3000')
     cy.contains('LeftSide', { timeout: 20000 })
   })
   // it('Has a left side view with baobab', () => {
