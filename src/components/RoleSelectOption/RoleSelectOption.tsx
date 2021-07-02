@@ -36,6 +36,7 @@ const optionWrapperStyles = css`
   border-radius: 6px;
 `
 
+<<<<<<< HEAD
 export const Option: React.FC<OptionProps> = ({ label, text, src, alt }) => {
   return (
     <RoleSelectWrapper>
@@ -70,6 +71,48 @@ export const Option: React.FC<OptionProps> = ({ label, text, src, alt }) => {
     </RoleSelectWrapper>
   )
 }
+=======
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding-inline-start: 8px;
+    padding-block-start: 10px;
+    padding-block-end: 4px;
+    align-items: center;
+    box-sizing: border-box;
+    border-radius: 6px;
+    @media (max-width: 360px) {
+        flex-direction: column;
+        justify-content: start;
+    }
+`;
+
+export const Option :React.FC<OptionProps> = ({label, text, src, alt}) => {
+    return (
+        <RoleSelectWrapper>
+            <div className={label === "Buyer" ? "inner-select-wrapper-buyer" : "inner-select-wrapper-seller" }>
+                <div className={label === "Buyer" ? "dark-polygon-wrapper-bg" : "white-polygon-wrapper-bg"}>
+                    <img src={src} alt={alt} />
+                </div>
+                <div className="text-wrapper">
+                    <h6>{label}</h6>
+                    <p>{text}</p>
+                </div>
+                {label === "Buyer" ? 
+                <button className="arrow-right-wrapper" onClick={() => null}>
+                    <img src={arrowRightIcon} alt="Arrow icon" />
+                </button>
+                :
+                <button className="arrow-right-wrapper-hidden">
+                    <img src={arrowRightIcon} alt="Arrow icon" />
+                </button>
+                }   
+            </div>
+        </RoleSelectWrapper>
+    )
+} 
+>>>>>>> Fix(Buttons): Resolving conflicts
 
 const RoleSelectWrapper = styled.div`
   .inner-select-wrapper-buyer {
@@ -102,6 +145,7 @@ const RoleSelectWrapper = styled.div`
     color: #041d42;
   }
 
+<<<<<<< HEAD
   .text-wrapper p {
     max-width: 161px;
     font-size: 14px;
@@ -113,6 +157,35 @@ const RoleSelectWrapper = styled.div`
     @media (max-width: 360px) {
       text-align: center;
       margin: 0;
+=======
+    .text-wrapper {
+         @media (max-width: 360px) {
+            text-align: center;
+            margin: 0;
+        }
+         @media (max-width: 476px) {
+            max-width: 150px;
+        }
+     }
+
+    .text-wrapper {
+         @media (max-width: 360px) {
+            text-align: center;
+            margin: 0;
+        }
+         @media (max-width: 476px) {
+            max-width: 150px;
+        }
+     }
+
+    .text-wrapper h6 {
+        font-family: 'Futura Std';
+        font-size: 16px;
+        line-height: 19px;
+        margin-block-start: 16px;
+        margin-block-end: 0;
+        color: #041D42;
+>>>>>>> Fix(Buttons): Resolving conflicts
     }
     @media (max-width: 476px) {
       max-width: 150px;
