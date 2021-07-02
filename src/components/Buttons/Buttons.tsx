@@ -19,7 +19,7 @@ const FirstWrapper = styled.div`
 const SecondWrapper = styled.div`
   display: inline-block;
   background: rgba(21, 140, 177, 0.3);
-  position: relative;
+  position: absolute;
   top: 6px;
   left: -6px;
 `
@@ -32,7 +32,7 @@ const Button = styled.button<ButtonsProps>`
     font-style: normal;
   }
 
-  position: relative;
+  position: absolute;
   top: -3px;
   left: 3px;
   outline: none;
