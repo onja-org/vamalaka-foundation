@@ -51,9 +51,6 @@ module.exports = {
       body: {
         type: new GraphQLNonNull(GraphQLString),
       },
-      username: {
-        type: new GraphQLNonNull(GraphQLString),
-      },
     },
     resolve: async (root, args) => {
       const UpdatedAd = await adModel.findByIdAndUpdate(args.id, args);
@@ -73,23 +70,26 @@ module.exports = {
     resolve: async (root, args, context) => {
       console.log(args, "args");
       const user = checkAuth(context);
-
       const adToRemove = await adModel.findByIdAndRemove(args.id);
+      if (!adToRemove) {
+        throw new Error(`Add with id: ${args.id} not found`);
+      }
+
       try {
         if (user.username === adToRemove.username) {
           await adToRemove.delete();
-          return "ad deleted successfully";
+          // return "ad deleted successfully";
+          return {
+            username: adToRemove.username,
+            id: adToRemove._id,
+            title: adToRemove.title,
+          };
         } else {
           throw new Error("action not allowed");
         }
       } catch (error) {
         throw new Error(error);
       }
-
-      // if (!removedAd) {
-      //   throw new Error("error");
-      // }
-      // return removedAd;
     },
   },
   createComment: {
@@ -122,7 +122,7 @@ module.exports = {
           await adToComment.save();
           return adToComment;
         } else {
-          throw new Error("Post not found");
+          throw new Error("Ad not found");
         }
       } catch (error) {
         throw new Error(error);
