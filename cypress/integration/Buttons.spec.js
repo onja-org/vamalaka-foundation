@@ -8,7 +8,7 @@ describe('Buttons Screen', () => {
   it('Displays the learn button', () => {
     cy.contains('Buttons')
     cy.visit(
-      'http://localhost:6006/iframe.html?id=components-buttons--learn-abled&args=&viewMode=story'
+      'http://localhost:6006/iframe.html?id=components-buttons--learn-enabled&viewMode=story'
     )
     cy.contains('Learn more')
   })
