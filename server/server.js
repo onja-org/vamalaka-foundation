@@ -17,7 +17,6 @@ const mergedSchema = mergeSchemas({
 });
 
 const cors = require("cors");
-const { Stream } = require("stream");
 
 const USER_UPLOAD_DIR = `.${process.env.USER_UPLOAD_DIR}`;
 const USER_UPLOADED_DIR = process.env.USER_UPLOADED_DIR;
