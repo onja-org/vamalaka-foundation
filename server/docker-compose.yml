@@ -5,10 +5,14 @@ services:
     build: .
     ports:
       - "4000:4000"
+    environment:
+      - USER_UPLOAD_DIR=/images
+      - USER_UPLOADED_DIR=/app/images
     links:
       - mongo
     volumes:
       - ". :/usr/src/graphqlApp"
+      - ./uploads:/app/images
   mongo:
     container_name: graphqlmongo
     image: mongo
