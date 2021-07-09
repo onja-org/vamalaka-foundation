@@ -55,7 +55,7 @@ var upload = multer({
       cb("Error: Images Only!");
     }
   },
-  limits: { fileSize: 1048576 }, //1MB
+  limits: { fileSize: 1 * 1024 * 1024 }, //1MB
 });
 
 app.use(cors());
@@ -75,14 +75,32 @@ app.listen(app.get("port"), () => {
   console.log("Node app is running at localhost:" + app.get("port"));
 });
 
-app.post("/upload", upload.single("photo"), function (req, res) {
-  if (!req.file) {
-    console.log("No file received");
-  } else {
-    console.log("Got a file to process:", req.file.originalname);
-    return res.json({ success: true, filename: req.file.filename });
+const AVATAR = "avatar";
+const OFFER = "offer";
+
+app.post(
+  "/upload",
+  upload.fields([
+    { name: AVATAR, maxCount: 1 },
+    { name: OFFER, maxCount: 1 },
+  ]),
+  function (req, res) {
+    if (!req.files) {
+      console.log("No files received");
+    } else {
+
+      const avatarFile = req.files[AVATAR];
+      const offerFile = req.files[OFFER];
+
+      const filenames = [
+        ...(avatarFile ? [avatarFile[0].filename] : []),
+        ...(offerFile ? [offerFile[0].filename] : []),
+      ];
+      console.log("Got a files to process:", req.files);
+      return res.json({ success: true, filenames });
+    }
   }
-});
+);
 
 app.get("/uploads/:file", function (req, res) {
   let filepath = path.resolve(USER_UPLOADED_DIR, req.params.file);
@@ -97,8 +115,6 @@ app.get("/uploads/:file", function (req, res) {
   });
   ps.pipe(res);
 });
-
-// app.use("/uploads", express.static("uploads"));
 
 app.use(
   "/graphql",
