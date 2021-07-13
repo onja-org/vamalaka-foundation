@@ -1,7 +1,7 @@
-FROM node:latest
+FROM node:14-alpine
 WORKDIR /app
 RUN mkdir images
 COPY . .
 RUN npm install
 EXPOSE 4000
-CMD npm start
+CMD [ "npm", "run", "start.dev" ]

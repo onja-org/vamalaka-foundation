@@ -66,7 +66,7 @@ mongoose.connect(
   { useUnifiedTopology: true },
   (err) => {
     if (err) throw err;
-    console.log("connected to mo1223m");
+    console.log("connected to aaummm");
   }
 );
 
@@ -88,7 +88,6 @@ app.post(
     if (!req.files) {
       console.log("No files received");
     } else {
-
       const avatarFile = req.files[AVATAR];
       const offerFile = req.files[OFFER];
 
@@ -109,7 +108,7 @@ app.get("/uploads/:file", function (req, res) {
   const ps = new stream.PassThrough();
   stream.pipeline(r, ps, (error) => {
     if (error) {
-      console.log("stream Error", error);
+      console.log("File Errorrrrrrrrrrr", error);
       return res.sendStatus(400);
     }
   });
