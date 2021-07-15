@@ -1,7 +1,10 @@
 FROM node:14-alpine
-WORKDIR /app
+WORKDIR  /app
+COPY package.json /app/package.json
 RUN mkdir images
-COPY . .
 RUN npm install
+
+# install application
+COPY . /app
 EXPOSE 4000
 CMD [ "npm", "run", "start.dev" ]
