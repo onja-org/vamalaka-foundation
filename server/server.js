@@ -12,6 +12,8 @@ const adSchema = require("./graphql/AdSchema").AdSchema;
 const userSchema = require("./graphql/UserSchema").UserSchema;
 const categorySchema = require("./graphql/CategorySchema").CategorySchema;
 
+const { resize } = require("./utils/resize");
+
 const mergedSchema = mergeSchemas({
   schemas: [categorySchema, adSchema, userSchema],
 });
@@ -66,7 +68,7 @@ mongoose.connect(
   { useUnifiedTopology: true },
   (err) => {
     if (err) throw err;
-    console.log("connected to aaummm");
+    console.log("connected to Auuuuuummmooooooo");
   }
 );
 
@@ -103,16 +105,31 @@ app.post(
 
 app.get("/uploads/:file", function (req, res) {
   let filepath = path.resolve(USER_UPLOADED_DIR, req.params.file);
+  const widthString = req.query.width;
+  const heightString = req.query.height;
+  const format = req.query.format;
+  console.log("WiDTH", widthString);
 
-  const r = fs.createReadStream(filepath);
-  const ps = new stream.PassThrough();
-  stream.pipeline(r, ps, (error) => {
-    if (error) {
-      console.log("File Errorrrrrrrrrrr", error);
-      return res.sendStatus(400);
-    }
-  });
-  ps.pipe(res);
+  let width, height;
+  if (widthString) {
+    width = parseInt(widthString);
+  }
+  if (heightString) {
+    height = parseInt(heightString);
+  }
+  try {
+    const readStream = fs.createReadStream(filepath);
+    readStream.on("error", (err) => {
+      console.log("Read stream Error " + err);
+      res.status(500).send(err);
+    });
+
+    const transform = resize(format, width, height);
+
+    readStream.pipe(transform).pipe(res);
+  } catch (err) {
+    res.status(500).send("Something broke!");
+  }
 });
 
 app.use(
@@ -130,3 +147,24 @@ app.use(
 app.get("/", (req, res) => {
   res.send("hello wood ! ");
 });
+
+function logErrors(err, req, res, next) {
+  console.error(err.stack);
+  next(err);
+}
+
+function clientErrorHandler(err, req, res, next) {
+  if (req.xhr) {
+    res.status(500).send({ error: "Something failed!" });
+  } else {
+    next(err);
+  }
+}
+function errorHandler(err, req, res, next) {
+  res.status(500);
+  res.render("error", { error: err });
+}
+
+app.use(logErrors);
+app.use(clientErrorHandler);
+app.use(errorHandler);
