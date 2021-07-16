@@ -12,7 +12,9 @@ const adSchema = require("./graphql/AdSchema").AdSchema;
 const userSchema = require("./graphql/UserSchema").UserSchema;
 const categorySchema = require("./graphql/CategorySchema").CategorySchema;
 
-const { resize } = require("./utils/resize");
+const sharp = require("sharp");
+
+const { resize, dummySVG } = require("./utils/image-manipulation");
 
 const mergedSchema = mergeSchemas({
   schemas: [categorySchema, adSchema, userSchema],
@@ -103,12 +105,70 @@ app.post(
   }
 );
 
-app.get("/uploads/:file", function (req, res) {
+// TODO:
+// add images field to user and offer
+// return dummy image ?
+
+const generatePlaceholderImageWithText = async (width, height, message) => {
+  console.log(width, "width");
+  console.log(height, "height");
+  // const overlay = `<svg width="${width - 20}" height="${height - 20}">
+
+  // </svg>`;
+  const overlay = `<svg width="${width - 20}" height="${height - 20}">
+    <path d="M150 0 L75 ${width} L225 ${height} Z" />
+    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">${message}</text>    
+  </svg>`;
+
+  // const overlay = dummySVG(message, width, height);
+
+  return await sharp({
+    create: {
+      width,
+      height,
+      channels: 4,
+      background: { r: 230, g: 230, b: 230, alpha: 1 },
+    },
+  })
+    .composite([
+      {
+        input: Buffer.from(overlay),
+        gravity: "center",
+      },
+    ])
+    .jpeg()
+    .toFile("/app/images/noise.jpg");
+
+  // return await sharp({
+  //   create: {
+  //     width,
+  //     height,
+  //     channels: 3,
+  //     noise: {
+  //       type: "gaussian",
+  //       mean: 128,
+  //       sigma: 30,
+  //     },
+  //   },
+  // }).toFile("/app/images/noise.png");
+
+  // .toBuffer();
+  // .then(function (info) {
+  //   console.log(info);
+  // })
+  // .catch(function (err) {
+  //   console.log(err);
+  // });
+};
+app.get("/uploads/:file", async function (req, res) {
   let filepath = path.resolve(USER_UPLOADED_DIR, req.params.file);
   const widthString = req.query.width;
   const heightString = req.query.height;
   const format = req.query.format;
+  const message = req.query.message;
   console.log("WiDTH", widthString);
+  console.log("filepathfilepath:", filepath);
+  console.log("message:", message);
 
   let width, height;
   if (widthString) {
@@ -117,18 +177,38 @@ app.get("/uploads/:file", function (req, res) {
   if (heightString) {
     height = parseInt(heightString);
   }
-  try {
-    const readStream = fs.createReadStream(filepath);
+  if (filepath === "/app/images/dummy.jpg") {
+    const dumImgBuffer = await generatePlaceholderImageWithText(
+      222,
+      222,
+      message || "DUMMY IMAGE"
+    );
+    const readStream = fs.createReadStream("/app/images/noise.jpg");
     readStream.on("error", (err) => {
       console.log("Read stream Error " + err);
       res.status(500).send(err);
     });
-
     const transform = resize(format, width, height);
 
     readStream.pipe(transform).pipe(res);
-  } catch (err) {
-    res.status(500).send("Something broke!");
+    // readStream.pipe(res);
+
+    // res.send(dumImgBuffer);
+    // return;
+  } else {
+    try {
+      const readStream = fs.createReadStream(filepath);
+      readStream.on("error", (err) => {
+        console.log("Read stream Error " + err);
+        res.status(500).send(err);
+      });
+
+      const transform = resize(format, width, height);
+
+      readStream.pipe(transform).pipe(res);
+    } catch (err) {
+      res.status(500).send("Something broke!");
+    }
   }
 });
 
