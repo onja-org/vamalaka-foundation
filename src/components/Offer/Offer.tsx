@@ -5,7 +5,7 @@ import { DescriptionOffer } from '../DescriptionOffer/descriptionOffer'
 import { HeaderOfOffer } from '../HeaderOfOffer/HeaderOfOffer'
 import { ImageWithinOffer } from '../ImageWithinOffer/ImageWithinOffer'
 import { PriceOfOffer } from '../PriceOfOffer/PriceOfOffer'
-import { Rating } from '../rating/Rating'
+import { Rating } from '../Rating/Rating'
 import { SellerPreviewInfo } from '../SellerPreviewInfo/SellerPreviewInfo'
 
 const flexLayout = css`

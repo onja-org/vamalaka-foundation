@@ -1,6 +1,5 @@
 import React from 'react'
 import { HeaderStyle } from '../../redux/Style'
-
 export interface HeaderProps {
   name?: string
 }
