@@ -1,5 +1,5 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const AdSchema = new Schema({
   body: {
@@ -40,5 +40,5 @@ const AdSchema = new Schema({
   ],
 });
 
-var AdModel = mongoose.model("ad", AdSchema);
+const AdModel = mongoose.model("ad", AdSchema);
 module.exports = AdModel;

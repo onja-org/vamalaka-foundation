@@ -1,9 +1,9 @@
-var adType = require("../types/adType");
-var adModel = require("../../models/ad");
-var GraphQLNonNull = require("graphql").GraphQLNonNull;
-var GraphQLString = require("graphql").GraphQLString;
+const adType = require("../types/adType");
+const adModel = require("../../models/ad");
+const GraphQLNonNull = require("graphql").GraphQLNonNull;
+const GraphQLString = require("graphql").GraphQLString;
 const checkAuth = require("../../utils/check-auth");
-var GraphQLID = require("graphql").GraphQLID;
+const GraphQLID = require("graphql").GraphQLID;
 
 module.exports = {
   createAd: {

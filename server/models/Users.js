@@ -1,12 +1,17 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   username: { type: String, require: true },
   password: { type: String, require: true },
   email: { type: String, require: true },
   role: { type: String, require: true },
-
-  images: { type: [String] },
+  photos: [
+    {
+      url: { type: String, require: true },
+      info: { type: String },
+      isPrimary: { type: Boolean },
+    },
+  ],
   firstName: { type: String },
   lastName: { type: String },
   address: { type: String },
@@ -19,5 +24,5 @@ const UserSchema = new Schema({
   createdAt: { type: String },
 });
 
-var UserModel = mongoose.model("user", UserSchema);
+const UserModel = mongoose.model("user", UserSchema);
 module.exports = UserModel;

@@ -1,9 +1,9 @@
-var categoryType = require("../types/categoryType");
-var CategoryModel = require("../../models/category");
-var GraphQLNonNull = require("graphql").GraphQLNonNull;
-var GraphQLString = require("graphql").GraphQLString;
+const categoryType = require("../types/categoryType");
+const CategoryModel = require("../../models/category");
+const GraphQLNonNull = require("graphql").GraphQLNonNull;
+const GraphQLString = require("graphql").GraphQLString;
 const checkAuth = require("../../utils/check-auth");
-var GraphQLID = require("graphql").GraphQLID;
+const GraphQLID = require("graphql").GraphQLID;
 
 module.exports = {
   createCategory: {

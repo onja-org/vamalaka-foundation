@@ -1,9 +1,9 @@
-var GraphQLObjectType = require("graphql").GraphQLObjectType;
-var GraphQLNonNull = require("graphql").GraphQLNonNull;
-var GraphQLID = require("graphql").GraphQLID;
-var GraphQLString = require("graphql").GraphQLString;
-var GraphQLList = require("graphql").GraphQLList;
-
+const GraphQLObjectType = require("graphql").GraphQLObjectType;
+const GraphQLNonNull = require("graphql").GraphQLNonNull;
+const GraphQLID = require("graphql").GraphQLID;
+const GraphQLString = require("graphql").GraphQLString;
+const GraphQLList = require("graphql").GraphQLList;
+const { PhotoType } = require("./photoType");
 exports.userRoles = ["buyer", "seller", "admin", "moderator"];
 
 exports.userType = new GraphQLObjectType({
@@ -25,8 +25,8 @@ exports.userType = new GraphQLObjectType({
       role: {
         type: new GraphQLNonNull(GraphQLString),
       },
-      images: {
-        type: new GraphQLList(GraphQLString),
+      photos: {
+        type: new GraphQLList(PhotoType),
       },
       firstName: {
         type: GraphQLString,

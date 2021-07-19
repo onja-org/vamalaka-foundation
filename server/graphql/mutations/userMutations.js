@@ -1,10 +1,10 @@
-var userType = require("../types/user");
-var usersModel = require("../../models/Users");
-var JWT_SECRET = require("../../config").JWT_SECRET;
-var GraphQLNonNull = require("graphql").GraphQLNonNull;
-var GraphQLString = require("graphql").GraphQLString;
-var GraphQLList = require("graphql").GraphQLList;
-var GraphQLInputObjectType = require("graphql").GraphQLInputObjectType;
+const userType = require("../types/user");
+const usersModel = require("../../models/Users");
+const JWT_SECRET = require("../../config").JWT_SECRET;
+const GraphQLNonNull = require("graphql").GraphQLNonNull;
+const GraphQLString = require("graphql").GraphQLString;
+const GraphQLList = require("graphql").GraphQLList;
+const GraphQLInputObjectType = require("graphql").GraphQLInputObjectType;
 const {
   validateRegisterInput,
   validateLoginInput,
@@ -12,6 +12,7 @@ const {
 const checkAuth = require("../../utils/check-auth");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { PhotoInput } = require("../types/photoType");
 
 const RegisterInput = new GraphQLInputObjectType({
   name: "RegisterInput",
@@ -131,8 +132,8 @@ module.exports = {
   updateUser: {
     type: userType.userType,
     args: {
-      images: {
-        type: new GraphQLList(GraphQLString),
+      photos: {
+        type: new GraphQLList(PhotoInput),
       },
       firstName: {
         type: GraphQLString,
