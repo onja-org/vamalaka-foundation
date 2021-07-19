@@ -53,7 +53,9 @@ module.exports = {
       },
     },
     resolve: async (root, args) => {
-      const UpdatedAd = await adModel.findByIdAndUpdate(args.id, args);
+      const UpdatedAd = await adModel.findByIdAndUpdate(args.id, args, {
+        new: true,
+      });
       if (!UpdatedAd) {
         throw new Error("Error");
       }

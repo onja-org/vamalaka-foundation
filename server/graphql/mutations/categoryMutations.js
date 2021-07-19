@@ -51,7 +51,10 @@ module.exports = {
     resolve: async (root, args) => {
       const updatedCategory = await CategoryModel.findByIdAndUpdate(
         args.id,
-        args
+        args,
+        {
+          new: true,
+        }
       );
       if (!updatedCategory) {
         throw new Error("Error");

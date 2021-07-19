@@ -106,7 +106,20 @@ app.post(
 );
 
 // TODO:
-// add images field to user and offer
+
+////// ADD to user:
+// images array description,
+
+////// ADD to offer
+// images array
+
+// currency
+// price
+
+// unit
+
+// amountOfProduct
+
 // return dummy image ?
 
 const generatePlaceholderImageWithText = async (width, height, message) => {

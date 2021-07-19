@@ -3,11 +3,13 @@ var usersModel = require("../../models/Users");
 var JWT_SECRET = require("../../config").JWT_SECRET;
 var GraphQLNonNull = require("graphql").GraphQLNonNull;
 var GraphQLString = require("graphql").GraphQLString;
+var GraphQLList = require("graphql").GraphQLList;
 var GraphQLInputObjectType = require("graphql").GraphQLInputObjectType;
 const {
   validateRegisterInput,
   validateLoginInput,
 } = require("../../utils/validators");
+const checkAuth = require("../../utils/check-auth");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -124,6 +126,58 @@ module.exports = {
       const userData = { ...existingUser._doc, id: existingUser._id, token };
       console.log(userData, "userData ------ - -- ");
       return userData;
+    },
+  },
+  updateUser: {
+    type: userType.userType,
+    args: {
+      images: {
+        type: new GraphQLList(GraphQLString),
+      },
+      firstName: {
+        type: GraphQLString,
+      },
+      lastName: {
+        type: GraphQLString,
+      },
+      address: {
+        type: GraphQLString,
+      },
+      city: {
+        type: GraphQLString,
+      },
+      state: {
+        type: GraphQLString,
+      },
+      country: {
+        type: GraphQLString,
+      },
+      phone: {
+        type: GraphQLString,
+      },
+      bio: {
+        type: GraphQLString,
+      },
+    },
+    resolve: async (root, args, context) => {
+      const errors = {};
+      const user = checkAuth(context);
+      if (!user) {
+        const errNotAuthenticated = "You are not authenticated";
+        errors.errNotAuthenticated = errNotAuthenticated;
+        throw new Error(errNotValid);
+      }
+
+      console.log("updateUSER:::::", user);
+
+      const updatedUser = await usersModel.findByIdAndUpdate(user.id, args, {
+        new: true,
+      });
+
+      if (!updatedUser) {
+        throw new Error("Error no user found for update");
+      }
+      return updatedUser;
     },
   },
 };
