@@ -2,8 +2,11 @@ const adType = require("../types/adType");
 const adModel = require("../../models/ad");
 const GraphQLNonNull = require("graphql").GraphQLNonNull;
 const GraphQLString = require("graphql").GraphQLString;
+const GraphQLFloat = require("graphql").GraphQLFloat;
+const GraphQLList = require("graphql").GraphQLList;
 const checkAuth = require("../../utils/check-auth");
 const GraphQLID = require("graphql").GraphQLID;
+const { PhotoInput } = require("../types/photoType");
 
 module.exports = {
   createAd: {
@@ -15,20 +18,38 @@ module.exports = {
       body: {
         type: new GraphQLNonNull(GraphQLString),
       },
+      photos: {
+        type: new GraphQLList(PhotoInput),
+      },
+      currency: {
+        type: GraphQLString,
+      },
+      price: {
+        type: GraphQLFloat,
+      },
+      unit: {
+        type: GraphQLString,
+      },
+      amountOfProduct: {
+        type: GraphQLFloat,
+      },
     },
     resolve: async (root, args, context) => {
-      // console.log(root, "root ");
-      // console.log(context, "context ");
       const user = checkAuth(context);
       console.log(user, "user");
-      const { title, body, username } = args;
+      const { title, body, photos, currency, price, unit, amountOfProduct } =
+        args;
 
-      // const uModel = new adModel(args);
       const uModel = new adModel({
         title,
         body,
         username: user.username,
         user: user.id,
+        photos,
+        currency,
+        price,
+        unit,
+        amountOfProduct,
         createdAt: new Date().toISOString(),
       });
 
@@ -46,10 +67,25 @@ module.exports = {
         type: new GraphQLNonNull(GraphQLString),
       },
       title: {
-        type: new GraphQLNonNull(GraphQLString),
+        type: GraphQLString,
       },
       body: {
-        type: new GraphQLNonNull(GraphQLString),
+        type: GraphQLString,
+      },
+      photos: {
+        type: new GraphQLList(PhotoInput),
+      },
+      currency: {
+        type: GraphQLString,
+      },
+      price: {
+        type: GraphQLFloat,
+      },
+      unit: {
+        type: GraphQLString,
+      },
+      amountOfProduct: {
+        type: GraphQLFloat,
       },
     },
     resolve: async (root, args) => {
@@ -79,8 +115,9 @@ module.exports = {
 
       try {
         if (user.username === adToRemove.username) {
+          //TODO add removal of the images ?
           await adToRemove.delete();
-          // return "ad deleted successfully";
+
           return {
             username: adToRemove.username,
             id: adToRemove._id,

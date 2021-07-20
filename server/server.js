@@ -107,33 +107,24 @@ app.post(
 
 // TODO:
 
-////// ADD to user:
-// images array description,
-
-////// ADD to offer
-// images array
-
-// currency
-// price
-
-// unit
-
-// amountOfProduct
-
-// return dummy image ?
+// cleanup dummy img
 
 const generatePlaceholderImageWithText = async (width, height, message) => {
   console.log(width, "width");
   console.log(height, "height");
-  // const overlay = `<svg width="${width - 20}" height="${height - 20}">
-
-  // </svg>`;
-  const overlay = `<svg width="${width - 20}" height="${height - 20}">
-    <path d="M150 0 L75 ${width} L225 ${height} Z" />
-    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">${message}</text>    
+  const overlay = `<svg width="${width}" height="${height}">
+  <polyline points="0,40 ${width * 0.1},${height * 0.2} ${width * 0.2},${
+    height * 0.3
+  } ${width * 0.3},${height * 0.4} ${width * 0.4},${height * 0.6} ${
+    width * 0.6
+  },${height * 0.6} ${width},${height}"
+  style="fill:white;stroke:red;stroke-width:4" />  
+  <path d="M150 0 L75 ${width} L225 ${height} Z" />
+    <path d="M150 -80 L75 ${width * 0.8} L225 ${
+    height * 0.8
+  } Z" fill="orange" />
+    <text x="50%" y="50%" fill="red" dominant-baseline="middle" text-anchor="middle">${message}</text>    
   </svg>`;
-
-  // const overlay = dummySVG(message, width, height);
 
   return await sharp({
     create: {
@@ -151,28 +142,8 @@ const generatePlaceholderImageWithText = async (width, height, message) => {
     ])
     .jpeg()
     .toFile("/app/images/noise.jpg");
-
-  // return await sharp({
-  //   create: {
-  //     width,
-  //     height,
-  //     channels: 3,
-  //     noise: {
-  //       type: "gaussian",
-  //       mean: 128,
-  //       sigma: 30,
-  //     },
-  //   },
-  // }).toFile("/app/images/noise.png");
-
-  // .toBuffer();
-  // .then(function (info) {
-  //   console.log(info);
-  // })
-  // .catch(function (err) {
-  //   console.log(err);
-  // });
 };
+
 app.get("/uploads/:file", async function (req, res) {
   let filepath = path.resolve(USER_UPLOADED_DIR, req.params.file);
   const widthString = req.query.width;
@@ -192,8 +163,8 @@ app.get("/uploads/:file", async function (req, res) {
   }
   if (filepath === "/app/images/dummy.jpg") {
     const dumImgBuffer = await generatePlaceholderImageWithText(
-      222,
-      222,
+      width || 222,
+      height || 222,
       message || "DUMMY IMAGE"
     );
     const readStream = fs.createReadStream("/app/images/noise.jpg");

@@ -1,17 +1,12 @@
 const mongoose = require("mongoose");
+const { photoSchemaDef } = require("./photo");
 const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   username: { type: String, require: true },
   password: { type: String, require: true },
   email: { type: String, require: true },
   role: { type: String, require: true },
-  photos: [
-    {
-      url: { type: String, require: true },
-      info: { type: String },
-      isPrimary: { type: Boolean },
-    },
-  ],
+  photos: [photoSchemaDef],
   firstName: { type: String },
   lastName: { type: String },
   address: { type: String },
