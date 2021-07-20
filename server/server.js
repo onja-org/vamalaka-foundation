@@ -12,9 +12,11 @@ const adSchema = require("./graphql/AdSchema").AdSchema;
 const userSchema = require("./graphql/UserSchema").UserSchema;
 const categorySchema = require("./graphql/CategorySchema").CategorySchema;
 
-const sharp = require("sharp");
-
-const { resize, dummySVG } = require("./utils/image-manipulation");
+const {
+  resize,
+  dummySVG,
+  generatePlaceholderImageWithText,
+} = require("./utils/image-manipulation");
 
 const mergedSchema = mergeSchemas({
   schemas: [categorySchema, adSchema, userSchema],
@@ -24,6 +26,9 @@ const cors = require("cors");
 
 const USER_UPLOAD_DIR = `.${process.env.USER_UPLOAD_DIR}`;
 const USER_UPLOADED_DIR = process.env.USER_UPLOADED_DIR;
+const DUMMY_IMG = process.env.DUMMY_IMG;
+
+const DUMMY_IMG_PATH = `${USER_UPLOADED_DIR}/${DUMMY_IMG}`;
 
 console.log("process.env.USER_UPLOAD_DIR", USER_UPLOAD_DIR);
 var storage = multer.diskStorage({
@@ -109,41 +114,6 @@ app.post(
 
 // cleanup dummy img
 
-const generatePlaceholderImageWithText = async (width, height, message) => {
-  console.log(width, "width");
-  console.log(height, "height");
-  const overlay = `<svg width="${width}" height="${height}">
-  <polyline points="0,40 ${width * 0.1},${height * 0.2} ${width * 0.2},${
-    height * 0.3
-  } ${width * 0.3},${height * 0.4} ${width * 0.4},${height * 0.6} ${
-    width * 0.6
-  },${height * 0.6} ${width},${height}"
-  style="fill:white;stroke:red;stroke-width:4" />  
-  <path d="M150 0 L75 ${width} L225 ${height} Z" />
-    <path d="M150 -80 L75 ${width * 0.8} L225 ${
-    height * 0.8
-  } Z" fill="orange" />
-    <text x="50%" y="50%" fill="red" dominant-baseline="middle" text-anchor="middle">${message}</text>    
-  </svg>`;
-
-  return await sharp({
-    create: {
-      width,
-      height,
-      channels: 4,
-      background: { r: 230, g: 230, b: 230, alpha: 1 },
-    },
-  })
-    .composite([
-      {
-        input: Buffer.from(overlay),
-        gravity: "center",
-      },
-    ])
-    .jpeg()
-    .toFile("/app/images/noise.jpg");
-};
-
 app.get("/uploads/:file", async function (req, res) {
   let filepath = path.resolve(USER_UPLOADED_DIR, req.params.file);
   const widthString = req.query.width;
@@ -161,13 +131,14 @@ app.get("/uploads/:file", async function (req, res) {
   if (heightString) {
     height = parseInt(heightString);
   }
-  if (filepath === "/app/images/dummy.jpg") {
+  if (filepath === DUMMY_IMG_PATH) {
     const dumImgBuffer = await generatePlaceholderImageWithText(
       width || 222,
       height || 222,
-      message || "DUMMY IMAGE"
+      message || "DUMMY IMAGE",
+      DUMMY_IMG_PATH
     );
-    const readStream = fs.createReadStream("/app/images/noise.jpg");
+    const readStream = fs.createReadStream(DUMMY_IMG_PATH);
     readStream.on("error", (err) => {
       console.log("Read stream Error " + err);
       res.status(500).send(err);
@@ -175,10 +146,6 @@ app.get("/uploads/:file", async function (req, res) {
     const transform = resize(format, width, height);
 
     readStream.pipe(transform).pipe(res);
-    // readStream.pipe(res);
-
-    // res.send(dumImgBuffer);
-    // return;
   } else {
     try {
       const readStream = fs.createReadStream(filepath);

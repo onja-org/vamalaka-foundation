@@ -26,6 +26,7 @@ services:
     environment:
       - USER_UPLOAD_DIR=/images
       - USER_UPLOADED_DIR=/app/images
+      - DUMMY_IMG=dummy.jpg
       - CHOKIDAR_USEPOLLING=true
     links:
       - mongo

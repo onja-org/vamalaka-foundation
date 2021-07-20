@@ -18,6 +18,46 @@ module.exports.resize = (format, width, height) => {
   }
 };
 
+module.exports.generatePlaceholderImageWithText = async (
+  width,
+  height,
+  message,
+  savePath
+) => {
+  console.log(width, "width");
+  console.log(height, "height");
+  const overlay = `<svg width="${width}" height="${height}">
+  <polyline points="0,40 ${width * 0.1},${height * 0.2} ${width * 0.2},${
+    height * 0.3
+  } ${width * 0.3},${height * 0.4} ${width * 0.4},${height * 0.6} ${
+    width * 0.6
+  },${height * 0.6} ${width},${height}"
+  style="fill:white;stroke:red;stroke-width:4" />  
+  <path d="M150 0 L75 ${width} L225 ${height} Z" />
+    <path d="M150 -80 L75 ${width * 0.8} L225 ${
+    height * 0.8
+  } Z" fill="orange" />
+    <text x="50%" y="50%" fill="red" dominant-baseline="middle" text-anchor="middle">${message}</text>    
+  </svg>`;
+
+  return await sharp({
+    create: {
+      width,
+      height,
+      channels: 4,
+      background: { r: 230, g: 230, b: 230, alpha: 1 },
+    },
+  })
+    .composite([
+      {
+        input: Buffer.from(overlay),
+        gravity: "center",
+      },
+    ])
+    .jpeg()
+    .toFile(savePath);
+};
+
 module.exports.dummySVG = (text = "dummy", width, height) =>
   `<svg
    width=${width}
