@@ -1,8 +1,6 @@
 import React from 'react'
-
 import styled from 'styled-components'
 import { fonts } from '../../globalStyles/fonts'
-
 export interface LoginProps {
   isSignedUp: boolean
   href: string
