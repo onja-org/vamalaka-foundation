@@ -24,7 +24,7 @@ OfferComponent.args = {
   amountOfProduct: 27,
   offerDescription:
     'This is a very detailed description that is absolutely necessary for being attractive to customers...',
-  isLearnEnabled: true,
+  isPrimary: true,
   isFavourited: false,
   detailButtonText: 'See details',
   favoriteButtonText: 'Add to favourite',
