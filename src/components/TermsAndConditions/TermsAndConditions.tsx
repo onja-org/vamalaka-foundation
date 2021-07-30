@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { fonts } from '../../globalStyles/fonts'
 import checkedSvg from './checked.svg'
@@ -8,6 +9,7 @@ export interface TermsAndConditionsProps {
   href: string
   serviceTerms: string
   isChecked?: boolean
+  onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined
 }
 
 const TermsAndConditionsStyle = styled.label`
@@ -23,8 +25,12 @@ const TermsAndConditionsStyle = styled.label`
   color: #979797;
 
   .terms_and_conditions {
-    text-decoration: underline;
+    text-decoration: none;
     color: currentColor;
+
+    @media (min-width: 920px) {
+      text-decoration: underline;
+    }
   }
 `
 
@@ -72,6 +78,7 @@ export const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({
   href,
   serviceTerms,
   isChecked,
+  onChange,
   ...props
 }) => {
   return (
@@ -83,6 +90,7 @@ export const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({
           className='checkbox'
           id='termAndCondition'
           checked={isChecked}
+          onChange={onChange}
         />
         <span className='checkMark'></span>
       </Checkbox>

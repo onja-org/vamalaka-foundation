@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import styled, { css } from 'styled-components'
-import Buttons from '../Buttons/Buttons'
+import Button from '../Button/Button'
 import { DescriptionOffer } from '../DescriptionOffer/descriptionOffer'
 import { HeaderOfOffer } from '../HeaderOfOffer/HeaderOfOffer'
 import { ImageWithinOffer } from '../ImageWithinOffer/ImageWithinOffer'
@@ -111,7 +111,7 @@ export interface OfferProps {
   imageForRating: string
   amountOfProduct: number
   offerDescription: string
-  isLearnEnabled: boolean
+  isPrimary: boolean
   detailButtonText: string
   favoriteButtonText?: string
   isFavourited?: boolean
@@ -139,7 +139,7 @@ export const Offer: React.FC<OfferProps> = ({
   ratingDescription,
   amountOfProduct,
   offerDescription,
-  isLearnEnabled,
+  isPrimary,
   detailButtonText,
   favoriteButtonText,
   isFavourited,
@@ -179,10 +179,10 @@ export const Offer: React.FC<OfferProps> = ({
         <SellerPreviewInfo image={profile} name={name} location={location} />
         <DescriptionOffer text={offerDescription} />
         <div className='buttonContainer'>
-          <Buttons learnEnabled={isLearnEnabled} label={detailButtonText} />
+          <Button isPrimary={isPrimary} label={detailButtonText} />
           <button className='favoriteButton'>{outlineHeart}</button>
           <div className='favoriteButtonContainer'>
-            <Buttons label={favoriteButtonText} />
+            <Button label={favoriteButtonText} />
           </div>
         </div>
       </div>
