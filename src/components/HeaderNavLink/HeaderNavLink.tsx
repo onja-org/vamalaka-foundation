@@ -5,6 +5,8 @@ import transactions from '../../assests/transactions.svg'
 import account from '../../assests/account.svg'
 import signin from '../../assests/signin.svg'
 import { fonts } from '../../globalStyles/fonts'
+import { Link } from 'react-router-dom'
+import { Paths } from '../helpers/routeHelper'
 
 export const loggedIn = [
   { path: '#language', imgSrc: language, alt: 'Languages', text: 'English' },
@@ -25,16 +27,16 @@ export const loggedIn = [
 export const loggeOut = [
   { path: '#language', imgSrc: language, alt: 'Languages', text: 'English' },
   {
-    path: '#login',
+    path: 'login',
     imgSrc: signin,
     alt: 'Log in',
     text: 'Log in',
   },
   {
-    path: '#account',
+    path: 'registered',
     imgSrc: account,
-    alt: 'Accounts',
-    text: 'Account',
+    alt: 'Sign Up',
+    text: 'Sign Up',
   },
 ]
 export interface ItemType {
@@ -50,10 +52,10 @@ export interface LinkTypes {
 
 export const HeaderNavLink: FC<ItemType> = ({ path, text, imgSrc, alt }) => (
   <Item>
-    <a type='button' href={path} data-testid={text}>
+    <Link type='button' to={`${Paths.HOME}${path}`} data-testid={text}>
       <img src={imgSrc} alt={alt} />
       <span>{text}</span>
-    </a>
+    </Link>
   </Item>
 )
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-
+import { Paths } from '../helpers/routeHelper'
+import { Link } from 'react-router-dom'
 export interface LogoProps {
   logo: string
   alt: string
@@ -9,9 +10,9 @@ export interface LogoProps {
 export const Logo: React.FC<LogoProps> = ({ alt, logo }) => {
   return (
     <Container>
-      <a href='/'>
+      <Link to={Paths.HOME}>
         <Image src={logo} alt={alt} />
-      </a>
+      </Link>
     </Container>
   )
 }

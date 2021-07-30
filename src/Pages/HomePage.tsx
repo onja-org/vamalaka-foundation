@@ -1,23 +1,22 @@
 import React from 'react'
+import { Container } from './HomePageStyle'
 import {
   TopContainerStyles,
-  Container,
   HeaderContainer,
   FooterContainer,
 } from '../components/RoleSelectionOnboard/RoleSelectionOnBoardiStyle'
 import { Header } from '../components/Header'
-import { loggedIn } from '../components/HeaderNavLink/HeaderNavLink'
-import { PageFooter, Props } from '../components/PageFooter/PageFooter'
-import { RoleSelectOnboard } from '../components/RoleSelectionOnboard/RoleSelectionOnBoard'
+import { loggeOut } from '../components/HeaderNavLink/HeaderNavLink'
+import { PageFooter } from '../components/PageFooter/PageFooter'
+import footerLinks from '../utils/FooterLinks'
 
-export const HomePage: React.FC<Props> = ({ footerLinks }) => {
+export const HomePage = () => {
   return (
     <Container>
       <TopContainerStyles>
         <HeaderContainer>
-          <Header item={loggedIn} />
+          <Header item={loggeOut} />
         </HeaderContainer>
-        <RoleSelectOnboard />
       </TopContainerStyles>
       <FooterContainer>
         <PageFooter footerLinks={footerLinks} />
