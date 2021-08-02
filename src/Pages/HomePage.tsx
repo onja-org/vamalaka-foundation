@@ -9,6 +9,7 @@ import { Header } from '../components/Header'
 import { loggeOut } from '../components/HeaderNavLink/HeaderNavLink'
 import { PageFooter } from '../components/PageFooter/PageFooter'
 import footerLinks from '../utils/FooterLinks'
+import OnboardingRegistration from './OnboardingRegistration'
 
 export const HomePage = () => {
   return (
@@ -21,6 +22,7 @@ export const HomePage = () => {
       <FooterContainer>
         <PageFooter footerLinks={footerLinks} />
       </FooterContainer>
+      <OnboardingRegistration />
     </Container>
   )
 }

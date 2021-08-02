@@ -103,7 +103,7 @@ export const RegistrationOnboard: React.FC<RegistrationOnboardingProps> = ({
             <RegistrationFormContent>
               <Input
                 label='Your username'
-                placeholder='Invictus Innocent'
+                placeholder='Username'
                 inputType='text'
                 inputId='useName'
                 inputValue={accountRegistration.username}
