@@ -22,12 +22,12 @@ const Template: Story<LinkTypes> = ({ item }) => (
   </List>
 )
 
-export const LoggedIn = Template.bind({})
-LoggedIn.args = {
-  item: loggedIn,
-}
-
 export const LoggedOut = Template.bind({})
 LoggedOut.args = {
   item: loggeOut,
+}
+
+export const LoggedIn = Template.bind({})
+LoggedIn.args = {
+  item: loggedIn,
 }
