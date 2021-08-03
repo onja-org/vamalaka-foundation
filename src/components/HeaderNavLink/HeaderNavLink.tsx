@@ -27,7 +27,7 @@ export const loggedIn = [
 export const loggeOut = [
   { path: '#language', imgSrc: language, alt: 'Languages', text: 'English' },
   {
-    path: 'login',
+    path: '#login',
     imgSrc: signin,
     alt: 'Log in',
     text: 'Log in',
@@ -68,7 +68,6 @@ const Item = styled.li`
     color: #041d42;
     text-decoration: none;
     display: flex;
-
     span {
       margin-inline-start: 10px;
 
