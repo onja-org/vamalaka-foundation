@@ -1,81 +1,93 @@
-import React from 'react'
-import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit'
-import { registerMutation, sendQuery } from '../../graphqlHelper'
-import { RootState } from '../store'
+import React from "react";
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+  Reducer,
+} from "@reduxjs/toolkit";
+import { registerMutation, sendQuery } from "../../graphqlHelper";
+import { AppDispatch, RootState } from "../store";
+import { any } from "cypress/types/bluebird";
 
 type FetchUserError = {
-  message: string
+  message: string;
+};
+
+interface UserData {
+  username: string;
+}
+
+interface UserRegisterForm {
+  username: string;
+  password: string;
+  email: string;
+  confirmPassword: string;
+  role: string;
 }
 
 export const fetchRegisterUser = createAsyncThunk<
-  any,
+  UserData,
+  UserRegisterForm,
   {
-    username: string
-    password: string
-    email: string
-    confirmPassword: string
-    role: string
-  },
-  { rejectValue: FetchUserError }
->(
-  'login/fetch',
-  async (
-    payload: {
-      username: string
-      password: string
-      email: string
-      confirmPassword: string
-      role: string
-    },
-    thunkApi
-  ) => {
-    const { username, password, email, confirmPassword, role } = payload
-    const response = await sendQuery(
-      registerMutation(username, password, email, confirmPassword, role)
-    )
-    console.log(response?.data?.data)
-
-    const user = response?.data?.data
-    if (response.status !== 200) {
-      return thunkApi.rejectWithValue({
-        message: 'Failed to fetch todos.',
-      })
-    }
-
-    return user
+    dispatch: any;
+    state: RootState;
+    rejectValue: FetchUserError;
   }
-)
+>("login/fetch", async (userRegistrationFormData, thunkApi) => {
+  const {
+    username,
+    password,
+    email,
+    confirmPassword,
+    role,
+  } = userRegistrationFormData;
+  const response = await sendQuery(
+    registerMutation(username, password, email, confirmPassword, role)
+  );
+  console.log(response?.data?.data);
+
+  const user = response?.data?.data;
+  if (response.status !== 200) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to fetch todos.",
+    });
+  }
+
+  return user;
+});
+
+const initialState = {
+  user: {},
+  status: "",
+  error: null as FetchUserError | null,
+};
 
 export const userSlice = createSlice({
-  name: 'counter',
-  initialState: {
-    user: null,
-    status: '',
-    error: null as FetchUserError | null,
-  },
+  name: "counter",
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchRegisterUser.pending, (state) => {
-      state.status = 'loading'
-      state.error = null
-    })
+      state.status = "loading";
+      state.error = null;
+    });
 
     builder.addCase(fetchRegisterUser.fulfilled, (state, { payload }) => {
-      state.user = payload
-      state.status = 'idle'
-    })
+      state.user = payload;
+      state.status = "idle";
+    });
 
     builder.addCase(fetchRegisterUser.rejected, (state, { payload }) => {
-      if (payload) state.error = payload
-      state.status = 'idle'
-    })
+      if (payload) state.error = payload;
+      state.status = "idle";
+    });
   },
-})
+});
 
-export const selectUser = (state: RootState) => state.user
-export const userSelector = createSelector<RootState, any[], any[]>(
+export const selectUser = (state: RootState) => state.user.user;
+export const userSelector = createSelector<RootState, any, any>(
   selectUser,
   (user) => user
-)
+);
 
-export default userSlice.reducer
+export default userSlice.reducer;

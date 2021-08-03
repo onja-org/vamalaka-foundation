@@ -1,21 +1,20 @@
-import React from 'react'
-import { useCallback } from 'react'
-import { RegistrationOnboard } from '../components/RegistrationOnboard/RegistrationOnboard'
-import { /*useAppSelector,*/ useAppDispatch } from '../redux/hooks'
-import { useSelector } from 'react-redux'
-import { fetchRegisterUser, userSelector } from '../redux/slices/userSlice'
-import { useState } from 'react'
-import { AppDispatch } from '../redux/store'
+import React from "react";
+import { useCallback } from "react";
+import { RegistrationOnboard } from "../components/RegistrationOnboard/RegistrationOnboard";
+import { useSelector } from "react-redux";
+import { fetchRegisterUser, userSelector } from "../redux/slices/userSlice";
+import { useState } from "react";
+import { useAppDispatch } from "../redux/hooks";
 
 export default function OnboardingRegistration() {
   const [accountRegistration, setAccountRegistration] = useState({
-    username: '',
-    emailAddress: '',
-    password: '',
-  })
-  const dispatch: AppDispatch = useAppDispatch()
-  const user = useSelector(userSelector)
-  const { username, password, emailAddress } = accountRegistration
+    username: "",
+    emailAddress: "",
+    password: "",
+  });
+  const dispatch = useAppDispatch();
+  const user = useSelector(userSelector);
+  const { username, password, emailAddress } = accountRegistration;
 
   const handleRegister = useCallback(() => {
     dispatch(
@@ -24,10 +23,10 @@ export default function OnboardingRegistration() {
         password,
         email: emailAddress,
         confirmPassword: password,
-        role: 'seller',
+        role: "seller",
       })
-    )
-  }, [username, password, emailAddress])
+    );
+  }, [username, password, emailAddress]);
 
   // TODO:
   // create confirm password pass it to fetchRegisterUser
@@ -35,10 +34,10 @@ export default function OnboardingRegistration() {
 
   return (
     <RegistrationOnboard
-      backLink='/'
-      backLabel='Back'
+      backLink="/"
+      backLabel="Back"
       accountRegistration={accountRegistration}
-      termsAndConditionLink='/'
+      termsAndConditionLink="/"
       isChecked={true}
       onChangeCheckbox={() => null}
       onChangeUserName={({ target }) =>
@@ -62,5 +61,5 @@ export default function OnboardingRegistration() {
       onClickRegister={() => null}
       onSubmit={handleRegister}
     />
-  )
+  );
 }
