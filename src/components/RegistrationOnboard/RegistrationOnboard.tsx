@@ -39,7 +39,7 @@ export type RegistrationOnboardingProps = {
   onChangePassword: React.ChangeEventHandler<HTMLInputElement> | undefined
   onChangeCheckbox?: React.ChangeEventHandler<HTMLInputElement> | undefined
   onClickRegister: () => void
-  onSubmit: () => void
+  onSubmit: (e: any) => void
 }
 
 export const RegistrationOnboard: React.FC<RegistrationOnboardingProps> = ({

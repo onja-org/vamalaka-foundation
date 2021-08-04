@@ -1,32 +1,40 @@
-import React from "react";
-import { useCallback } from "react";
-import { RegistrationOnboard } from "../components/RegistrationOnboard/RegistrationOnboard";
-import { useSelector } from "react-redux";
-import { fetchRegisterUser, userSelector } from "../redux/slices/userSlice";
-import { useState } from "react";
-import { useAppDispatch } from "../redux/hooks";
+import React from 'react'
+import { useCallback } from 'react'
+import { RegistrationOnboard } from '../components/RegistrationOnboard/RegistrationOnboard'
+import { useSelector } from 'react-redux'
+import { fetchRegisterUser, userSelector } from '../redux/slices/userSlice'
+import { useState } from 'react'
+import { useAppDispatch } from '../redux/hooks'
+import { fetchAds } from '../redux/slices/adsSlice'
 
 export default function OnboardingRegistration() {
   const [accountRegistration, setAccountRegistration] = useState({
-    username: "",
-    emailAddress: "",
-    password: "",
-  });
-  const dispatch = useAppDispatch();
-  const user = useSelector(userSelector);
-  const { username, password, emailAddress } = accountRegistration;
+    username: '',
+    emailAddress: '',
+    password: '',
+  })
+  const dispatch = useAppDispatch()
+  const user = useSelector(userSelector)
+  const { username, password, emailAddress } = accountRegistration
 
-  const handleRegister = useCallback(() => {
-    dispatch(
-      fetchRegisterUser({
-        username,
-        password,
-        email: emailAddress,
-        confirmPassword: password,
-        role: "seller",
-      })
-    );
-  }, [username, password, emailAddress]);
+  const handleRegister = useCallback(
+    (e) => {
+      e.preventDefault()
+      console.log(accountRegistration)
+
+      dispatch(
+        fetchAds(3)
+        // fetchRegisterUser({
+        //   username,
+        //   password,
+        //   email: emailAddress,
+        //   confirmPassword: password,
+        //   role: 'seller',
+        // })
+      )
+    },
+    [username, password, emailAddress]
+  )
 
   // TODO:
   // create confirm password pass it to fetchRegisterUser
@@ -34,10 +42,10 @@ export default function OnboardingRegistration() {
 
   return (
     <RegistrationOnboard
-      backLink="/"
-      backLabel="Back"
+      backLink='/'
+      backLabel='Back'
       accountRegistration={accountRegistration}
-      termsAndConditionLink="/"
+      termsAndConditionLink='/'
       isChecked={true}
       onChangeCheckbox={() => null}
       onChangeUserName={({ target }) =>
@@ -61,5 +69,5 @@ export default function OnboardingRegistration() {
       onClickRegister={() => null}
       onSubmit={handleRegister}
     />
-  );
+  )
 }

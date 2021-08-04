@@ -1,93 +1,93 @@
-import React from "react";
+import React from 'react'
 import {
   createAsyncThunk,
   createSelector,
   createSlice,
   Reducer,
-} from "@reduxjs/toolkit";
-import { registerMutation, sendQuery } from "../../graphqlHelper";
-import { AppDispatch, RootState } from "../store";
-import { any } from "cypress/types/bluebird";
+} from '@reduxjs/toolkit'
+import { registerMutation, sendMutation, sendQuery } from '../../graphqlHelper'
+import { AppDispatch, RootState } from '../store'
+import { any } from 'cypress/types/bluebird'
 
 type FetchUserError = {
-  message: string;
-};
+  message: string
+}
 
 interface UserData {
-  username: string;
+  username: string
 }
 
 interface UserRegisterForm {
-  username: string;
-  password: string;
-  email: string;
-  confirmPassword: string;
-  role: string;
+  username: string
+  password: string
+  email: string
+  confirmPassword: string
+  role: string
 }
 
 export const fetchRegisterUser = createAsyncThunk<
   UserData,
   UserRegisterForm,
   {
-    dispatch: any;
-    state: RootState;
-    rejectValue: FetchUserError;
+    dispatch: any
+    state: RootState
+    rejectValue: FetchUserError
   }
->("login/fetch", async (userRegistrationFormData, thunkApi) => {
+>('login/fetch', async (userRegistrationFormData, thunkApi) => {
   const {
     username,
     password,
     email,
     confirmPassword,
     role,
-  } = userRegistrationFormData;
-  const response = await sendQuery(
+  } = userRegistrationFormData
+  const response = await sendMutation(
     registerMutation(username, password, email, confirmPassword, role)
-  );
-  console.log(response?.data?.data);
+  )
+  console.log(response?.data?.data)
 
-  const user = response?.data?.data;
+  const user = response?.data?.data
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
-      message: "Failed to fetch todos.",
-    });
+      message: 'Failed to fetch todos.',
+    })
   }
 
-  return user;
-});
+  return user
+})
 
 const initialState = {
   user: {},
-  status: "",
+  status: '',
   error: null as FetchUserError | null,
-};
+}
 
 export const userSlice = createSlice({
-  name: "counter",
+  name: 'counter',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchRegisterUser.pending, (state) => {
-      state.status = "loading";
-      state.error = null;
-    });
+      state.status = 'loading'
+      state.error = null
+    })
 
     builder.addCase(fetchRegisterUser.fulfilled, (state, { payload }) => {
-      state.user = payload;
-      state.status = "idle";
-    });
+      state.user = payload
+      state.status = 'idle'
+    })
 
     builder.addCase(fetchRegisterUser.rejected, (state, { payload }) => {
-      if (payload) state.error = payload;
-      state.status = "idle";
-    });
+      if (payload) state.error = payload
+      state.status = 'idle'
+    })
   },
-});
+})
 
-export const selectUser = (state: RootState) => state.user.user;
+export const selectUser = (state: RootState) => state.user.user
 export const userSelector = createSelector<RootState, any, any>(
   selectUser,
   (user) => user
-);
+)
 
-export default userSlice.reducer;
+export default userSlice.reducer
