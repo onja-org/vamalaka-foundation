@@ -7,6 +7,7 @@ import signin from '../../assests/signin.svg'
 import { fonts } from '../../globalStyles/fonts'
 import { Link } from 'react-router-dom'
 import { Paths } from '../helpers/routeHelper'
+import { mediaQueries } from '../../globalStyles/mediaQuery'
 
 export const loggedIn = [
   { path: '#language', imgSrc: language, alt: 'Languages', text: 'English' },
@@ -70,15 +71,14 @@ const Item = styled.li`
     display: flex;
     span {
       margin-inline-start: 10px;
-
-      @media (max-width: 600px) {
-        display: none;
-      }
+      ${mediaQueries(null, 'md')`
+          display: none;
+      `}
     }
   }
   &:first-of-type {
-    @media (max-width: 900px) {
+    ${mediaQueries(null, 'md')`
       display: none;
-    }
+    `}
   }
 `

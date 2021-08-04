@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 import { fonts } from '../../globalStyles/fonts'
+import { mediaQueries } from '../../globalStyles/mediaQuery'
 
 export interface InputType {
   placeholderText: string
@@ -27,9 +28,9 @@ const Label = styled.label`
   position: relative;
   gap: 12px;
 
-  @media (min-width: 1200px) {
+  ${mediaQueries('lg', null)`
     width: 70%;
-  }
+  `}
 
   input {
     ${fonts}
@@ -58,8 +59,7 @@ const Label = styled.label`
       font-family: 'Futura Std', Arial, Helvetica, sans-serif;
     }
   }
-
-  @media (max-width: 900px) {
+  ${mediaQueries(null, 'md')`
     display: none;
-  }
+  `}
 `

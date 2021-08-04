@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 import { fonts } from '../../globalStyles/fonts'
+import { mediaQueries } from '../../globalStyles/mediaQuery'
 import arrowRightIcon from '../../stories/assets/arrow-right.svg'
 import darkPolygonBg from '../../stories/assets/dark-polygon.svg'
 import whitePolygonBg from '../../stories/assets/white-polygon.svg'
-
 export interface OptionProps {
   label: string
   text: string
@@ -72,13 +72,11 @@ export const RoleSelectOption: React.FC<OptionProps> = ({
 }
 
 const TextWrapper = styled.div`
-  @media (max-width: 360px) {
-    text-align: center;
+  ${mediaQueries('sm', null)`
+  text-align: center;
     margin: 0;
-  }
-  @media (max-width: 476px) {
     max-width: 150px;
-  }
+`}
 `
 const ArrowRightWrapper = styled.button`
   border: none;

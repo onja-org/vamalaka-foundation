@@ -8,6 +8,7 @@ const Text = styled.p`
   color: rgba(151, 151, 151, 1);
   font-size: 14px;
   line-height: 17px;
+  margin-block-start: 20px;
 `
 export interface Props {
   text: string

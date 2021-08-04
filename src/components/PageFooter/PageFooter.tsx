@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { LinkSection } from '../Footer/Footer'
-
+import { mediaQueries } from '../../globalStyles/mediaQuery'
 export interface Props {
   footerLinks: {
     summary: string
@@ -41,12 +41,12 @@ const FooterContainer = styled('div')`
   details {
     padding: 0;
   }
-  @media (max-width: 640px) {
+  ${mediaQueries(null, 'sm')`
     flex-direction: column;
     gap: 21px;
-  }
+  `}
 
-  @media (min-width: 1114px) {
+  ${mediaQueries('lg', null)`
     max-width: 1167px;
     min-width: auto;
     padding-top: 320px;
@@ -54,5 +54,5 @@ const FooterContainer = styled('div')`
     padding-left: unset;
     padding-right: unset;
     margin: auto;
-  }
+  `}
 `

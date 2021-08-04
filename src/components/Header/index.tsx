@@ -3,6 +3,8 @@ import { Logo } from '../Logo/Logo'
 import styled from 'styled-components'
 import logo from '../Logo/images/vamalaka.svg'
 import searchIcon from '../../assests/searchIcon.svg'
+import { mediaQueries } from '../../globalStyles/mediaQuery'
+
 import {
   HeaderNavLink,
   ItemType,
@@ -41,10 +43,9 @@ const HeaderStyles = styled.header`
     grid-template-columns: 346px 1fr 1fr;
     align-items: center;
     gap: 50px;
-
-    @media (max-width: 900px) {
-      display: flex;
+    ${mediaQueries(null, 'md')`
+        display: flex;
       justify-content: space-between;
-    }
+    `}
   }
 `

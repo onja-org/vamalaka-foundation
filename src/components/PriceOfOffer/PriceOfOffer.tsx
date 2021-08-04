@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-
+import { mediaQueries } from '../../globalStyles/mediaQuery'
 import { fonts } from '../../globalStyles/fonts'
 
 export interface PriceOfOfferProps {
@@ -28,9 +28,8 @@ const Price = styled.p`
   font-size: 14px;
   line-height: 16px;
   color: #041d42;
-
-  @media (min-width: 362px) {
+  ${mediaQueries('sm', null)`
     font-size: 16px;
     line-height: 18px;
-  }
+  `}
 `

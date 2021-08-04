@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import styled, { css } from 'styled-components'
 import Button from '../Button/Button'
 import { DescriptionOffer } from '../DescriptionOffer/descriptionOffer'
@@ -7,6 +7,7 @@ import { ImageWithinOffer } from '../ImageWithinOffer/ImageWithinOffer'
 import { PriceOfOffer } from '../PriceOfOffer/PriceOfOffer'
 import { Rating } from '../Rating/Rating'
 import { SellerPreviewInfo } from '../SellerPreviewInfo/SellerPreviewInfo'
+import { mediaQueries } from '../../globalStyles/mediaQuery'
 
 const flexLayout = css`
   display: flex;
@@ -34,25 +35,23 @@ const OfferStyle = styled.div`
       &:focus {
         outline: none;
       }
-      @media (min-width: 1114px) {
+      ${mediaQueries('lg', null)`
         display: none;
-      }
+      `}
     }
     .favoriteButtonContainer {
       display: none;
-      @media (min-width: 1114px) {
+      ${mediaQueries('lg', null)`
         display: block;
-      }
-
+      `}
       button {
         padding: 6px 10px;
       }
     }
-
-    @media (min-width: 1114px) {
-      padding-bottom: 5px;
+    ${mediaQueries('lg', null)`
+        padding-bottom: 5px;
       max-width: 90%;
-    }
+      `}
   }
 
   .offerDetails {
@@ -63,40 +62,39 @@ const OfferStyle = styled.div`
       transform: translateY(-26px);
       background-color: #fff;
       width: fit-content;
-
-      @media (min-width: 1114px) {
+      ${mediaQueries('lg', null)`
         transform: translateY(14px);
         font-size: 30px;
-      }
+      `}
     }
   }
 
   .productDetails {
     ${flexLayout}
     gap: 11.5px;
-
-    @media (min-width: 1114px) {
-      gap: 15.75px;
-    }
+    ${mediaQueries('lg', null)`
+         gap: 15.75px;
+      `}
   }
 
   .ratingContainer {
     ${flexLayout}
     gap: 4.19px;
-
-    @media (min-width: 1114px) {
-      gap: 7.5px;
-    }
+    ${mediaQueries('lg', null)`
+          gap: 7.5px;
+    `}
   }
 
-  @media (min-width: 1114px) {
-    ${flexLayout}
+  ${mediaQueries('lg', null)`
+     display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: space-between;
     max-width: 422px;
     padding-left: 3px;
     padding-right: 11px;
     box-shadow: 0px 4px 50px -8px rgba(21, 140, 177, 0.3);
-  }
+    `}
 `
 
 export interface OfferProps {

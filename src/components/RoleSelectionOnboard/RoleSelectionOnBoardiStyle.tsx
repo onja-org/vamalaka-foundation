@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-const maxWidthMedia = '920px'
+import { mediaQueries } from '../../globalStyles/mediaQuery'
 
 export const TopContainerStyles = styled.div`
   background: linear-gradient(
@@ -11,16 +11,15 @@ export const TopContainerStyles = styled.div`
   width: 100%;
   min-height: calc(318px + 164px + 59px);
   padding-block-end: 95px;
-  @media (max-width: ${maxWidthMedia}) {
+  ${mediaQueries(null, 'lg')`
     min-height: 444px;
     padding-block-end: 73px;
-  }
-  @media (max-width: 420px) {
-    min-height: 544px;
-  }
-  @media (max-width: 360px) {
-    min-height: 644px;
-  }
+  `}
+
+  ${mediaQueries(null, 'sm')`
+   min-height: 544px;
+
+  `}
 `
 export const MainContainer = styled.div`
   position: absolute;
@@ -30,28 +29,30 @@ export const MainContainer = styled.div`
   padding: 47px 14px 14px 16px;
   display: flex;
   justify-content: center;
-  @media (max-width: 920px) {
+  ${mediaQueries(null, 'lg')`
     & > div:nth-child(1) {
       display: none;
     }
-  }
+  `}
 `
 export const RoleOptionContainer = styled.div`
   position: relative;
   background-color: #fff;
   max-width: 583px;
+  text-align: left;
   & > div {
     max-width: 426px;
     margin: auto;
     padding: 14px;
-    div {
+    div:nth-of-type(2),
+    div:nth-of-type(3) {
       margin: 14px 0;
     }
   }
-  @media (min-width: ${maxWidthMedia}) {
+  ${mediaQueries('lg', null)`
     flex-basis: 50%;
     padding: calc(113px - 14px * 2) 0;
-  }
+  `}
 `
 export const Container = styled.div`
   position: relative;
@@ -59,7 +60,7 @@ export const Container = styled.div`
   footer > div {
     padding-top: 220px;
   }
-  @media (max-width: ${maxWidthMedia}) {
+  ${mediaQueries(null, 'lg')`
     footer > div > * {
       display: none;
     }
@@ -67,18 +68,18 @@ export const Container = styled.div`
       padding: 0;
       min-height: 184px;
     }
-  }
+  `}
 `
 export const AccountContainer = styled.div`
   color: #979797;
-  @media (min-width: ${maxWidthMedia}) {
+  ${mediaQueries('lg', null)`
     p {
       position: absolute;
       margin: 0;
       top: 22px;
       right: 27px;
     }
-  }
+  `}
 `
 export const HeaderContainer = styled.div`
   padding: 10px 16px 11px 10px;
@@ -90,9 +91,9 @@ export const ImageContainer = styled.div`
   max-width: 583px;
   max-height: 601px;
   overflow: hidden;
-  @media (min-width: ${maxWidthMedia}) {
+  ${mediaQueries('lg', null)`
     flex-basis: 50%;
-  }
+  `}
   p {
     margin: 0;
   }
@@ -103,19 +104,21 @@ export const JoinUsHeader = styled.h3`
   font-weight: 650;
   font-size: 30px;
   line-height: 36px;
-  align-items: center;
   color: #041d42;
+  text-transform: capitalize;
   margin: calc(27px - 14px) 0 4px 0;
+  ${mediaQueries('lg', null)`
+    margin: calc(27px - 35px) 0 -18px 0; 
+  `}
 `
 export const FooterContainer = styled.div`
   footer > div {
     max-width: 90%;
     margin: auto;
   }
-  @media (min-width: calc(583px * 2 + 60px)) {
+  ${mediaQueries('lg', null)`
     footer > div {
       max-width: calc(563px * 2);
-      margin: auto;
     }
-  }
+  `}
 `
