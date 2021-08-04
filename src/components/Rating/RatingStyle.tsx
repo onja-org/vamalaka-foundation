@@ -1,22 +1,16 @@
+import { FC } from 'react'
+import styled from 'styled-components'
+import { mediaQueries } from '../../globalStyles/mediaQuery'
 
-import { FC } from "react";
-import styled  from "styled-components";
-
-const Container = styled.div `
+const Container = styled.div`
   display: flex;
   gap: 5.2px;
   flex-wrap: wrap;
-
-  @media only screen and (max-width:992pxpx) and (min-width:768px)  {
-    gap: 6px;  
-  }
-
-  @media(min-width:  992px) {
-      gap: 6.3px
-  }
-
+  ${mediaQueries('lg', 'md')`
+    gap: 6px;
+  `}
 `
 
- export const RatingStyle: FC=({children}) => {
-     return (<Container>{children}</Container>)
- }
+export const RatingStyle: FC = ({ children }) => {
+  return <Container>{children}</Container>
+}

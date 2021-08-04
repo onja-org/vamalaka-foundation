@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link, BrowserRouter as Router } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
+import { mediaQueries } from '../../globalStyles/mediaQuery'
 
 import { fonts } from '../../globalStyles/fonts'
 
@@ -43,8 +44,7 @@ const DetailsStyles = styled.details`
   summary::-webkit-details-marker {
     display: none;
   }
-
-  @media (max-width: 900px) {
+  ${mediaQueries(null, 'md')`
     text-align: start;
 
     a {
@@ -80,7 +80,7 @@ const DetailsStyles = styled.details`
     &[open] > summary::after {
       transform: rotate(180deg);
     }
-  }
+  `}
 `
 
 export interface SectionLinkProps {

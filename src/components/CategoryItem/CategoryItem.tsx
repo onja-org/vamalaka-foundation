@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { fonts } from '../../globalStyles/fonts'
+import { mediaQueries } from '../../globalStyles/mediaQuery'
 
 export interface CategoryItemProp {
   item: string
@@ -35,10 +36,10 @@ const Button = styled.button`
   box-sizing: border-box;
   border: 0.5px solid #158cb1;
 
-  @media (min-width: 600px) {
+  ${mediaQueries('sm', null)`
     font-size: 24px;
     padding: 11px 0 11px 0;
-  }
+  `}
 `
 const primaryColor = {
   button: {

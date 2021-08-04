@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { mediaQueries } from '../../globalStyles/mediaQuery'
 import { fonts } from '../../globalStyles/fonts'
 
 export interface SellerInfoProperties {
@@ -41,10 +42,10 @@ const Image = styled('img')`
   height: 20px;
   border-radius: 20px;
 
-  @media (min-width: 425px) {
+  ${mediaQueries('sm', null)`
     width: 31px;
     height: 31px;
-  }
+  `}
 `
 const Description = styled('span')`
   ${fonts}
@@ -54,9 +55,8 @@ const Description = styled('span')`
   font-size: 10px;
   line-height: 12px;
   color: #979797;
-
-  @media (min-width: 425px) {
+  ${mediaQueries('sm', null)`
     font-size: 12px;
     line-height: 14px;
-  }
+  `}
 `
